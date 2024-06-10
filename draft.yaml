@@ -1,0 +1,7 @@
+models:
+
+controllers:
+  Stock:
+    resource: api.get
+  User:
+    resource: api
