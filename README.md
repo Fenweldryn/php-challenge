@@ -46,7 +46,7 @@ curl  -X POST \
     "name": "test",
     "email": "test@test.com",
     "email_verified_at": null,
-    "token": "5|jGA5O3QJpsjTirT6aFd1lLEZWWexHWACMVi51Js075a67d1e"
+    "token": "{{token}}"
   }
 }
 ```

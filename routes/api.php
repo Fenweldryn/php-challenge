@@ -21,6 +21,6 @@ Route::get('stock', [App\Http\Controllers\StockController::class, 'index'])->mid
 Route::get('/notification', function () {
     return (new StockRequested((new StockRequestHelper(StooqApi::getStock('aapl.us')))->getStockData()))
         ->toMail(
-            User::find(8)
+            User::find(1)
         );
 });
