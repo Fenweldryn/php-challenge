@@ -5,6 +5,7 @@ use App\Helpers\StockRequestHelper;
 use App\Notifications\StockRequested;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -14,13 +15,12 @@ Route::post('/tokens/create', function (Request $request) {
 
     return ['token' => $token->plainTextToken];
 });
-
-Route::get('user/history', [App\Http\Controllers\UserController::class, 'history'])->middleware('auth:sanctum');
 Route::apiResource('users', App\Http\Controllers\UserController::class);
+Route::get('user/history', [App\Http\Controllers\UserController::class, 'history'])->middleware('auth:sanctum');
 Route::get('stock', [App\Http\Controllers\StockController::class, 'index'])->middleware('auth:sanctum');
 Route::get('/notification', function () {
-    return (new StockRequested())
+    return (new StockRequested((new StockRequestHelper(StooqApi::getStock('aapl.us')))->getStockData()))
         ->toMail(
-            (new StockRequestHelper(StooqApi::getStock('aapl.us')))->getStockData()
+            User::find(8)
         );
 });

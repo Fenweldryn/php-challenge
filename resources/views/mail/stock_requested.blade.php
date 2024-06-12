@@ -21,6 +21,11 @@
         }
     </style>
     <h1>Stock Requested</h1>
+    <h3> Hello! </h3>
+    <p>
+        You have requested a stock quote for <b>{{$name}}</b> and here it is.
+    </p>
+
     <table>
     <header>
         <th>Name</th>

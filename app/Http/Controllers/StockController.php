@@ -30,19 +30,24 @@ class StockController extends Controller
         }
 
         $stockHelper = new StockRequestHelper($response);
-
         if (!$stockHelper->isDataValid()) {
             return response()->json(['message' => 'Stock data not found'], 404);
         }
 
         $stock = $stockHelper->getStockData();
+
         $user = Auth::user();
         if ($user) {
             Notification::send($user, new StockRequested($stock));
         }
 
         $stock->save();
-        // Log::info('Stock data requested', ['stock' => $stock]);
+        $stock = collect($stock);
+        $stock->forget('id');
+        $stock->forget('created_at');
+        $stock->forget('updated_at');
+
+        Log::info('Stock data requested', ['stock' => $stock]);
 
         return response()->json($stock, 200);
     }

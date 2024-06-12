@@ -6,17 +6,18 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\Models\Stock;
 
 class StockRequested extends Notification implements ShouldQueue
 {
     use Queueable;
-
+    private array $stock;
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(Stock $stock)
     {
-        //
+        $this->stock = $stock->toArray();
     }
 
     /**
@@ -34,11 +35,7 @@ class StockRequested extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        return (new MailMessage)
-                    ->greeting('Hello!')
-                    ->line('You have requested a stock quote for <b>' . $notifiable->stock . '</b>.')
-                    ->view('mail.stock_requested', $notifiable->toArray())
-                    ->line('Thank you for choosing <b>PHP-Challenge API</b>!');
+        return (new MailMessage)->view('mail.stock_requested', $this->stock);
     }
     /**
      * Get the array representation of the notification.
