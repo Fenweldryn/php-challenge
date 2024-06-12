@@ -10,6 +10,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -20,13 +21,18 @@ class UserController extends Controller
         return new UserCollection($users);
     }
 
-    public function store(UserStoreRequest $request): UserResource
+    public function store(UserStoreRequest $request): JsonResponse
     {
-        $user = User::create($request->validated());
+        try {
+            $user = User::create($request->validated());
+
+        } catch (\Throwable $th) {
+            return response()->json(['Error' => 'Email has already been used. Choose a new email.'], 400);
+        }
         $token = $user->createToken('default');
         $user->token = $token->plainTextToken;
 
-        return new UserResource($user);
+        return response()->json($user, 200);
     }
 
     public function history(Request $request): StockCollection
