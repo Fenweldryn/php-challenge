@@ -1,7 +1,14 @@
 models:
+  Stock:
+    name: string
+    symbol: string
+    open: decimal:8,2
+    high: decimal:8,2
+    low: decimal:8,2
+    close: decimal:8,2
 
 controllers:
   Stock:
-    resource: api.get
+    resource: api
   User:
     resource: api

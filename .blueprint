@@ -1,2 +1,16 @@
+created:
+    - app/Http/Controllers/StockController.php
+    - app/Http/Controllers/UserController.php
+    - database/factories/StockFactory.php
+    - database/migrations/2024_06_10_232033_create_stocks_table.php
+    - app/Models/Stock.php
+    - tests/Feature/Http/Controllers/StockControllerTest.php
+    - tests/Feature/Http/Controllers/UserControllerTest.php
+    - app/Http/Requests/StockStoreRequest.php
+    - app/Http/Requests/StockUpdateRequest.php
+    - app/Http/Resources/StockResource.php
+updated:
+    - routes/api.php
 models:
     User: { name: string, email: string, email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable' }
+    Stock: { name: string, symbol: string, open: 'decimal:8,2', high: 'decimal:8,2', low: 'decimal:8,2', close: 'decimal:8,2' }
